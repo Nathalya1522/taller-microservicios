@@ -1,7 +1,14 @@
 <?php
+require_once "../presentation/middlewares/CorsMiddleware.php";
 require_once "../presentation/routers/endpoints.php";
+require_once "../controllers/SprintController.php";
+require_once "../controllers/HistoriaController.php";
+require_once "../controllers/ReporteController.php";
+
+CorsMiddleware::aplicar();
 
 $router = new Router();
+$router->dispatch($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);
 
 // Sprint endpoints
 $router->register(new Route("GET", "/sprints", function() {

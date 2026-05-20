@@ -19,7 +19,7 @@ class Reporte {
         $this->puntos_totales = $puntos_totales;
         $this->velocidad = $velocidad;
     }
-
+    
     public function getTotalHistorias(): int { return $this->total_historias; }
     public function getFinalizadas(): int { return $this->finalizadas; }
     public function getImpedimentos(): int { return $this->impedimentos; }
