@@ -9,7 +9,6 @@ class SprintRepository {
         $this->conn = $db->getConnection();
     }
 
-    
     public function listar(): array {
         $query = "SELECT * FROM sprints";
         $stmt = $this->conn->prepare($query);
@@ -17,7 +16,6 @@ class SprintRepository {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    
     public function crear(string $nombre, string $fecha_inicio, string $fecha_fin): bool {
         $query = "INSERT INTO sprints (nombre, fecha_inicio, fecha_fin) 
                   VALUES (:nombre, :fecha_inicio, :fecha_fin)";
@@ -29,7 +27,6 @@ class SprintRepository {
         ]);
     }
 
-    
     public function eliminar(int $id): bool {
         $query = "DELETE FROM sprints WHERE id = :id";
         $stmt = $this->conn->prepare($query);

@@ -9,7 +9,6 @@ class ReporteRepository {
         $this->conn = $db->getConnection();
     }
 
-    
     public function generar(int $sprint_id): array {
         $query = "SELECT 
                     COUNT(*) AS total_historias,

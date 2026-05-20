@@ -9,7 +9,6 @@ class HistoriaRepository {
         $this->conn = $db->getConnection();
     }
 
-    
     public function listarPorSprint(int $sprint_id): array {
         $query = "SELECT * FROM historias WHERE sprint_id = :sprint_id";
         $stmt = $this->conn->prepare($query);
@@ -17,7 +16,6 @@ class HistoriaRepository {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    
     public function crear(
         string $titulo,
         string $descripcion,
@@ -42,14 +40,12 @@ class HistoriaRepository {
         ]);
     }
 
-    
     public function actualizarEstado(int $id, string $estado): bool {
         $query = "UPDATE historias SET estado = :estado WHERE id = :id";
         $stmt = $this->conn->prepare($query);
         return $stmt->execute(["estado" => $estado, "id" => $id]);
     }
 
-    
     public function eliminar(int $id): bool {
         $query = "DELETE FROM historias WHERE id = :id";
         $stmt = $this->conn->prepare($query);
