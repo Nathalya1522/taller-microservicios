@@ -1,5 +1,5 @@
 <?php
-require_once "../presentation/repositories/ReporteRepository.php";
+require_once __DIR__ . '/../repositories/ReporteRepository.php';
 
 class ReporteController {
     private ReporteRepository $repo;
@@ -9,6 +9,6 @@ class ReporteController {
     }
 
     public function generar(int $sprint_id): array {
-        return $this->repo->generar($sprint_id);
+        return $this->repo->generar($sprint_id)->toArray();
     }
 }

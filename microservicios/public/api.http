@@ -1,0 +1,55 @@
+@base = http://localhost/taller-microservicios/microservicios/public
+
+### Listar sprints
+GET {{base}}/sprints
+
+### Obtener sprint por ID
+GET {{base}}/sprints/show?id=1
+
+### Crear sprint
+POST {{base}}/sprints
+Content-Type: application/json
+
+{ "nombre": "Sprint 1", "fecha_inicio": "2025-06-01", "fecha_fin": "2025-06-14" }
+
+### Eliminar sprint
+DELETE {{base}}/sprints
+Content-Type: application/json
+
+{ "id": 1 }
+
+### Listar todas las historias
+GET {{base}}/historias
+
+### Listar historias de un sprint
+GET {{base}}/historias?sprint_id=1
+
+### Obtener historia por ID
+GET {{base}}/historias/show?id=1
+
+### Crear historia
+POST {{base}}/historias
+Content-Type: application/json
+
+{ "titulo": "Login", "descripcion": "Iniciar sesión con correo", "responsable": "Ana", "estado": "nueva", "puntos": 3, "fecha_creacion": "2025-06-01", "sprint_id": 1 }
+
+### Actualizar historia completa
+PUT {{base}}/historias
+Content-Type: application/json
+
+{ "id": 1, "titulo": "Login actualizado", "descripcion": "...", "responsable": "Ana", "estado": "activa", "puntos": 5, "sprint_id": 1 }
+
+### Cambiar solo el estado
+PATCH {{base}}/historias
+Content-Type: application/json
+
+{ "id": 1, "estado": "finalizada" }
+
+### Eliminar historia
+DELETE {{base}}/historias
+Content-Type: application/json
+
+{ "id": 1 }
+
+### Reporte del sprint (general + por responsable)
+GET {{base}}/reportes?sprint_id=1
