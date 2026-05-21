@@ -595,3 +595,67 @@ tr:hover td { background: rgba(255,255,255,0.02); }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+/* ════════════════════════════════
+   Mi codigo
+════════════════════════════════ */
+
+:root{
+
+    --primary:#6C63FF;
+    --secondary:#00C9A7;
+    --danger:#FF5C5C;
+    --warning:#FFC857;
+
+    --dark:#0F172A;
+    --card:#1E293B;
+
+    --text:#F8FAFC;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    background:var(--dark);
+
+    color:var(--text);
+
+    font-family:'Poppins',sans-serif;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+:root{
+
+    --primary:#6C63FF;
+    --secondary:#00C9A7;
+    --danger:#FF5C5C;
+    --warning:#FFC857;
+
+    --dark:#0F172A;
+    --card:#1E293B;
+
+    --text:#F8FAFC;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    display:flex;
+
+    background:var(--dark);
+
+    color:var(--text);
+
+    font-family:'Poppins',sans-serif;
+}

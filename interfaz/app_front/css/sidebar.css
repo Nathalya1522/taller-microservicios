@@ -1,0 +1,47 @@
+.sidebar{
+
+    width:260px;
+
+    height:100vh;
+
+    background:#111827;
+
+    padding:25px;
+
+    position:fixed;
+}
+
+.logo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    margin-bottom:40px;
+}
+
+.menu{
+
+    list-style:none;
+}
+
+.menu li{
+
+    padding:15px;
+
+    margin-bottom:10px;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.menu li:hover,
+.menu .active{
+
+    background:var(--primary);
+}

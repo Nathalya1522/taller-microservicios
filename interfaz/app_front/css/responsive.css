@@ -1,0 +1,19 @@
+@media(max-width:900px){
+
+    .sidebar{
+
+        width:100%;
+        height:auto;
+        position:relative;
+    }
+
+    .main-content{
+
+        margin-left:0;
+    }
+
+    .kanban-board{
+
+        flex-direction:column;
+    }
+}

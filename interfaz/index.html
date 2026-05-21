@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+    <title>Gestor de Historias</title>
+
+    <link rel="stylesheet"
+    href="./app_front/css/base.css">
+
+    <link rel="stylesheet"
+    href="./app_front/css/sidebar.css">
+
+    <link rel="stylesheet"
+    href="./app_front/css/navbar.css">
+
+    <link rel="stylesheet"
+    href="./app_front/css/dashboard.css">
+
+    <link rel="stylesheet"
+    href="./app_front/css/kanban.css">
+
+    <link rel="stylesheet"
+    href="./app_front/css/forms.css">
+
+    <link rel="stylesheet"
+    href="./app_front/css/tables.css">
+
+    <link rel="stylesheet"
+    href="./app_front/css/animations.css">
+
+    <link rel="stylesheet"
+    href="./app_front/css/responsive.css">
+
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+</head>
+
+<body>
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <i class="fa-solid fa-layer-group"></i>
+
+            <h2>SprintApp</h2>
+
+        </div>
+
+        <ul class="menu">
+
+            <li class="active">
+                <i class="fa-solid fa-chart-line"></i>
+                Dashboard
+            </li>
+
+            <li>
+                <i class="fa-solid fa-list-check"></i>
+                Historias
+            </li>
+
+            <li>
+                <i class="fa-solid fa-flag"></i>
+                Sprints
+            </li>
+
+            <li>
+                <i class="fa-solid fa-chart-pie"></i>
+                Reportes
+            </li>
+
+        </ul>
+
+    </aside>
+
+    <main class="main-content">
+
+        <header class="navbar">
+
+            <h1>
+                Dashboard General
+            </h1>
+
+        </header>
+
+        <section class="dashboard-cards">
+
+            <div class="card total">
+
+                <h3>Total Historias</h3>
+
+                <h1 id="totalHistorias">0</h1>
+
+            </div>
+
+            <div class="card active">
+
+                <h3>Historias Activas</h3>
+
+                <h1 id="historiasActivas">0</h1>
+
+            </div>
+
+            <div class="card completed">
+
+                <h3>Finalizadas</h3>
+
+                <h1 id="historiasFinalizadas">0</h1>
+
+            </div>
+
+            <div class="card blocked">
+
+                <h3>Impedimentos</h3>
+
+                <h1 id="historiasBloqueadas">0</h1>
+
+            </div>
+
+        </section>
+        <section class="form-container">
+
+          <form id="formHistoria">
+
+        <h2>Nueva Historia</h2>
+
+        <input
+            type="text"
+            id="titulo"
+            placeholder="Título"
+            required
+        >
+
+        <textarea
+            id="descripcion"
+            placeholder="Descripción"
+            required
+        ></textarea>
+
+        <input
+            type="text"
+            id="responsable"
+            placeholder="Responsable"
+            required
+        >
+
+        <select id="estado">
+
+            <option value="nueva">
+                Nueva
+            </option>
+
+            <option value="activa">
+                Activa
+            </option>
+
+            <option value="finalizada">
+                Finalizada
+            </option>
+
+            <option value="impedimento">
+                Impedimento
+            </option>
+
+        </select>
+
+        <button type="submit">
+            Guardar Historia
+        </button>
+
+         </form>
+
+        </section>
+
+        <section class="kanban-board">
+
+            <div class="kanban-column">
+
+                <h2>Nuevas</h2>
+
+                <div id="nuevas"></div>
+
+            </div>
+
+            <div class="kanban-column">
+
+                <h2>Activas</h2>
+
+                <div id="activas"></div>
+
+            </div>
+
+            <div class="kanban-column">
+
+                <h2>Finalizadas</h2>
+
+                <div id="finalizadas"></div>
+
+            </div>
+
+            <div class="kanban-column">
+
+                <h2>Impedimentos</h2>
+
+                <div id="impedimentos"></div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="./app_front/js/api.js"></script>
+    <script src="./app_front/js/dashboard.js"></script>
+    <script src="./app_front/js/historias.js"></script>
+
+</body>
+</html>
