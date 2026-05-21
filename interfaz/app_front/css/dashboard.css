@@ -37,26 +37,19 @@
 }
 
 .dashboard-cards{
-
     display:grid;
-
     grid-template-columns:
-    repeat(auto-fit,minmax(250px,1fr));
-
+    repeat(auto-fit,minmax(320px,1fr));
     gap:20px;
-
     margin-top:30px;
 }
 
 .card{
-
-    padding:25px;
-
+    padding:40px;
     border-radius:20px;
-
     transition:.3s;
-
     animation:fadeIn .5s ease;
+    min-height:180px;
 }
 
 .card:hover{
