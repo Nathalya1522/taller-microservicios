@@ -1,5 +1,6 @@
 <?php
-require_once __DIR__ . '/../repositories/SprintRepository.php';
+
+require_once __DIR__ . '/../presentation/repositories/SprintRepository.php';
 
 class SprintController {
     private SprintRepository $repo;
@@ -8,30 +9,41 @@ class SprintController {
         $this->repo = new SprintRepository();
     }
 
-    public function listar(): array {
-        return array_map(fn(Sprint $s) => $s->toArray(), $this->repo->listar());
+    public function index(): void {
+        $sprints = $this->repo->getAll();
+        echo json_encode(['success' => true, 'data' => $sprints]);
     }
 
-    public function buscarPorId(int $id): ?array {
-        return $this->repo->buscarPorId($id)?->toArray();
+    public function show(int $id): void {
+        $sprint = $this->repo->getById($id);
+        if (!$sprint) {
+            http_response_code(404);
+            echo json_encode(['success' => false, 'mensaje' => 'Sprint no encontrado']);
+            return;
+        }
+        echo json_encode(['success' => true, 'data' => $sprint]);
     }
 
-    public function crear(array $data): array {
-        foreach (['nombre', 'fecha_inicio', 'fecha_fin'] as $campo) {
-            if (empty($data[$campo])) {
-                return ['success' => false, 'error' => "El campo '{$campo}' es obligatorio"];
-            }
+    public function store(): void {
+        $datos = json_decode(file_get_contents('php://input'), true);
+        if (!isset($datos['nombre'], $datos['fecha_inicio'], $datos['fecha_fin'])) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'mensaje' => 'Datos incompletos']);
+            return;
         }
-        if ($data['fecha_inicio'] >= $data['fecha_fin']) {
-            return ['success' => false, 'error' => 'La fecha de inicio debe ser anterior a la fecha de fin'];
-        }
-        return ['success' => $this->repo->crear($data['nombre'], $data['fecha_inicio'], $data['fecha_fin'])];
+        $id = $this->repo->save($datos);
+        http_response_code(201);
+        echo json_encode(['success' => true, 'id' => $id, 'mensaje' => 'Sprint creado']);
     }
 
-    public function eliminar(int $id): array {
-        if (!$this->repo->buscarPorId($id)) {
-            return ['success' => false, 'error' => 'Sprint no encontrado'];
-        }
-        return ['success' => $this->repo->eliminar($id)];
+    public function update(int $id): void {
+        $datos = json_decode(file_get_contents('php://input'), true);
+        $ok = $this->repo->update($id, $datos);
+        echo json_encode(['success' => $ok, 'mensaje' => $ok ? 'Sprint actualizado' : 'Error al actualizar']);
+    }
+
+    public function destroy(int $id): void {
+        $ok = $this->repo->delete($id);
+        echo json_encode(['success' => $ok, 'mensaje' => $ok ? 'Sprint eliminado' : 'Error al eliminar']);
     }
 }

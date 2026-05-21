@@ -1,17 +1,24 @@
 <?php
-class CorsMiddleware {
-    public static function aplicar(): void {
-        // Permitir cualquier origen
+
+class Middleware {
+
+    public static function cors(): void {
         header("Access-Control-Allow-Origin: *");
-        // Métodos HTTP permitidos
         header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
-        // Encabezados permitidos
         header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
-        // Manejo de preflight
         if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-            http_response_code(200);
-            exit();
+            http_response_code(204);
+            exit;
         }
+    }
+
+    public static function json(): void {
+        header("Content-Type: application/json; charset=UTF-8");
+    }
+
+    public static function aplicar(): void {
+        self::cors();
+        self::json();
     }
 }

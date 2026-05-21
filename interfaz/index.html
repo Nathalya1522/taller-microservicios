@@ -18,9 +18,6 @@
     href="./app_front/css/sidebar.css">
 
     <link rel="stylesheet"
-    href="./app_front/css/navbar.css">
-
-    <link rel="stylesheet"
     href="./app_front/css/dashboard.css">
 
     <link rel="stylesheet"
@@ -30,10 +27,7 @@
     href="./app_front/css/forms.css">
 
     <link rel="stylesheet"
-    href="./app_front/css/tables.css">
-
-    <link rel="stylesheet"
-    href="./app_front/css/animations.css">
+    href="./app_front/css/modals.css">
 
     <link rel="stylesheet"
     href="./app_front/css/responsive.css">
@@ -48,58 +42,269 @@
     <aside class="sidebar">
 
         <div class="logo">
-
             <i class="fa-solid fa-layer-group"></i>
-
             <h2>SprintApp</h2>
-
         </div>
 
         <ul class="menu">
 
-    <li class="menu-item active"
-        data-section="dashboard">
+            <li class="menu-item active" data-section="dashboard">
+                <i class="fa-solid fa-chart-line"></i>
+                Dashboard
+            </li>
 
-        <i class="fa-solid fa-chart-line"></i>
-        Dashboard
-    </li>
+            <li class="menu-item" data-section="historias">
+                <i class="fa-solid fa-list-check"></i>
+                Historias
+            </li>
 
-    <li class="menu-item"
-        data-section="historias">
+            <li class="menu-item" data-section="sprints">
+                <i class="fa-solid fa-flag"></i>
+                Sprints
+            </li>
 
-        <i class="fa-solid fa-list-check"></i>
-        Historias
-    </li>
+            <li class="menu-item" data-section="retro">
+                <i class="fa-solid fa-rotate-left"></i>
+                Retro
+            </li>
 
-    <li class="menu-item"
-        data-section="sprints">
-
-        <i class="fa-solid fa-flag"></i>
-        Sprints
-    </li>
-
-    <li class="menu-item"
-        data-section="reportes">
-
-        <i class="fa-solid fa-chart-pie"></i>
-        Reportes
-    </li>
-
-</ul>
+        </ul>
 
     </aside>
 
     <main class="main-content">
 
-    <div id="app"></div>
+        <!-- DASHBOARD -->
+        <section id="sec-dashboard" class="seccion">
 
-</main>
+            <header class="navbar">
+                <h1>Dashboard General</h1>
+            </header>
+
+            <section class="dashboard-cards">
+                <div class="card total">
+                    <h3>Total Historias</h3>
+                    <h1 id="totalHistorias">0</h1>
+                </div>
+                <div class="card active">
+                    <h3>Historias Activas</h3>
+                    <h1 id="historiasActivas">0</h1>
+                </div>
+                <div class="card completed">
+                    <h3>Finalizadas</h3>
+                    <h1 id="historiasFinalizadas">0</h1>
+                </div>
+                <div class="card blocked">
+                    <h3>Impedimentos</h3>
+                    <h1 id="historiasBloqueadas">0</h1>
+                </div>
+            </section>
+
+            <section class="kanban-board">
+                <div class="kanban-column">
+                    <h2>Nuevas</h2>
+                    <div id="nuevas"></div>
+                </div>
+                <div class="kanban-column">
+                    <h2>Activas</h2>
+                    <div id="activas"></div>
+                </div>
+                <div class="kanban-column">
+                    <h2>Finalizadas</h2>
+                    <div id="finalizadas"></div>
+                </div>
+                <div class="kanban-column">
+                    <h2>Impedimentos</h2>
+                    <div id="impedimentos"></div>
+                </div>
+            </section>
+
+        </section>
+
+        <!-- HISTORIAS -->
+        <section id="sec-historias" class="seccion oculto">
+
+            <header class="navbar">
+                <h1>Historias de Usuario</h1>
+                <button class="btn-nuevo" onclick="abrirModalHistoria()">+ Nueva Historia</button>
+            </header>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Título</th>
+                        <th>Responsable</th>
+                        <th>Estado</th>
+                        <th>Puntos</th>
+                        <th>Fecha Fin</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-historias">
+                    <tr><td colspan="6" class="empty">Cargando historias...</td></tr>
+                </tbody>
+            </table>
+
+        </section>
+
+        <!-- SPRINTS -->
+        <section id="sec-sprints" class="seccion oculto">
+
+            <header class="navbar">
+                <h1>Sprints</h1>
+                <button class="btn-nuevo" onclick="abrirModalSprint()">+ Nuevo Sprint</button>
+            </header>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Fecha Inicio</th>
+                        <th>Fecha Fin</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-sprints">
+                    <tr><td colspan="4" class="empty">Cargando sprints...</td></tr>
+                </tbody>
+            </table>
+
+        </section>
+
+        <!-- RETRO -->
+        <section id="sec-retro" class="seccion oculto">
+
+            <header class="navbar">
+                <h1>Retro Items</h1>
+                <button class="btn-nuevo" onclick="abrirModalRetro()">+ Nuevo Item</button>
+            </header>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Descripción</th>
+                        <th>Categoría</th>
+                        <th>Sprint</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-retro">
+                    <tr><td colspan="4" class="empty">Cargando retro items...</td></tr>
+                </tbody>
+            </table>
+
+        </section>
+
+    </main>
+
+    <!-- MODAL SPRINT -->
+    <div class="modal-overlay" id="modal-sprint">
+        <div class="modal">
+            <h3 id="modal-sprint-titulo">Nuevo Sprint</h3>
+            <input type="hidden" id="sprint-id">
+            <div class="form-grid">
+                <div class="form-group full">
+                    <label>Nombre</label>
+                    <input id="s-nombre" placeholder="Nombre del sprint">
+                </div>
+                <div class="form-group">
+                    <label>Fecha Inicio</label>
+                    <input id="s-inicio" type="date">
+                </div>
+                <div class="form-group">
+                    <label>Fecha Fin</label>
+                    <input id="s-fin" type="date">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancelar" onclick="cerrarModal('modal-sprint')">Cancelar</button>
+                <button class="btn-guardar" onclick="guardarSprint()">Guardar Sprint</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL HISTORIA -->
+    <div class="modal-overlay" id="modal-historia">
+        <div class="modal">
+            <h3 id="modal-historia-titulo">Nueva Historia</h3>
+            <input type="hidden" id="historia-id">
+            <div class="form-grid">
+                <div class="form-group full">
+                    <label>Título</label>
+                    <input id="h-titulo" placeholder="Título de la historia">
+                </div>
+                <div class="form-group full">
+                    <label>Descripción</label>
+                    <textarea id="h-desc" placeholder="Descripción"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Responsable</label>
+                    <input id="h-responsable" placeholder="Nombre del responsable">
+                </div>
+                <div class="form-group">
+                    <label>Sprint</label>
+                    <select id="h-sprint">
+                        <option value="">-- Selecciona un Sprint --</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Estado</label>
+                    <select id="h-estado">
+                        <option value="nueva">Nueva</option>
+                        <option value="activa">Activa</option>
+                        <option value="finalizada">Finalizada</option>
+                        <option value="impedimento">Impedimento</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Puntos de Complejidad</label>
+                    <input id="h-puntos" type="number" placeholder="1" min="1">
+                </div>
+                <div class="form-group">
+                    <label>Fecha de Finalización (opcional)</label>
+                    <input id="h-fin" type="date">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancelar" onclick="cerrarModal('modal-historia')">Cancelar</button>
+                <button class="btn-guardar" onclick="guardarHistoria()">Guardar Historia</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL RETRO -->
+    <div class="modal-overlay" id="modal-retro">
+        <div class="modal">
+            <h3 id="modal-retro-titulo">Nuevo Retro Item</h3>
+            <input type="hidden" id="retro-id">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Categoría</label>
+                    <select id="r-tipo">
+                        <option value="bien">✅ Lo que salió bien</option>
+                        <option value="mejorar">⚠️ Por mejorar</option>
+                        <option value="accion">🎯 Acción</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Sprint</label>
+                    <select id="r-sprint">
+                        <option value="">-- Selecciona un Sprint --</option>
+                    </select>
+                </div>
+                <div class="form-group full">
+                    <label>Descripción</label>
+                    <textarea id="r-desc" placeholder="Descripción del item"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancelar" onclick="cerrarModal('modal-retro')">Cancelar</button>
+                <button class="btn-guardar" onclick="guardarRetro()">Guardar Item</button>
+            </div>
+        </div>
+    </div>
 
     <script src="./app_front/js/api.js"></script>
-    <script src="./app_front/js/dashboard.js"></script>
-    <script src="./app_front/js/historias.js"></script>
-    <script src="./app_front/js/sprints.js"></script>
-    <script src="./app_front/js/reportes.js"></script>
     <script src="./app_front/js/ui.js"></script>
 
 </body>
