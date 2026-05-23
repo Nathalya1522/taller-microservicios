@@ -1,103 +1,72 @@
-### Listar todas las retrospectivas
-GET http://127.0.0.1:8000/retrospectivas
+### Listar todos los sprints
+GET http://127.0.0.1:8000/sprints
 
-### Consultar una retrospectiva por ID
-GET http://127.0.0.1:8000/retrospectiva/1
+### Consultar un sprint por ID
+GET http://127.0.0.1:8000/sprint/1
 
-### Crear una retrospectiva
-POST http://127.0.0.1:8000/retrospectiva
+### Crear un sprint
+POST http://127.0.0.1:8000/sprint
 Content-Type: application/json
 
 {
-    "sprint_numero": 1,
-    "sprint_nombre": "Sprint 1",
-    "fecha": "2026-05-22",
-    "descripcion": "Primera retrospectiva del equipo"
+    "nombre": "Sprint 1",
+    "fecha_inicio": "2026-05-01",
+    "fecha_fin": "2026-05-15"
 }
 
-### Modificar una retrospectiva
-PUT http://127.0.0.1:8000/retrospectiva/1
+### Modificar un sprint
+PUT http://127.0.0.1:8000/sprint/1
 Content-Type: application/json
 
 {
-    "sprint_numero": 1,
-    "sprint_nombre": "Sprint 1 actualizado",
-    "fecha": "2026-05-22",
-    "descripcion": "Descripcion actualizada"
+    "nombre": "Sprint 1 actualizado",
+    "fecha_inicio": "2026-05-01",
+    "fecha_fin": "2026-05-20"
 }
 
-### Eliminar una retrospectiva
-DELETE http://127.0.0.1:8000/retrospectiva/1
+### Eliminar un sprint
+DELETE http://127.0.0.1:8000/sprint/1
 
-### ─── ITEMS ──────────────────────────────────────────────────────
+### ─── HISTORIAS ───────────────────────────────────────────────────
 
-### Listar items de una retrospectiva
-GET http://127.0.0.1:8000/retrospectiva/1/items
+### Listar todas las historias
+GET http://127.0.0.1:8000/historias
 
-### Crear un logro
-POST http://127.0.0.1:8000/retrospectiva/1/items
+### Listar historias de un sprint
+GET http://127.0.0.1:8000/sprint/1/historias
+
+### Consultar una historia por ID
+GET http://127.0.0.1:8000/historia/1
+
+### Crear una historia
+POST http://127.0.0.1:8000/historia
 Content-Type: application/json
 
 {
-    "tipo": "logro",
-    "descripcion": "Completamos todos los tickets del sprint",
-    "estado": "pendiente"
+    "titulo": "Como usuario quiero iniciar sesion",
+    "descripcion": "El usuario debe poder iniciar sesion con email y password",
+    "responsable": "Juan Perez",
+    "estado": "nueva",
+    "puntos": 5,
+    "fecha_creacion": "2026-05-01",
+    "fecha_finalizacion": null,
+    "sprint_id": 1
 }
 
-### Crear un impedimento
-POST http://127.0.0.1:8000/retrospectiva/1/items
+### Modificar una historia
+PUT http://127.0.0.1:8000/historia/1
 Content-Type: application/json
 
 {
-    "tipo": "impedimento",
-    "descripcion": "Falta de comunicacion entre el equipo",
-    "estado": "pendiente"
+    "titulo": "Como usuario quiero iniciar sesion actualizado",
+    "descripcion": "Descripcion actualizada",
+    "responsable": "Maria Lopez",
+    "estado": "activa",
+    "puntos": 8,
+    "fecha_creacion": "2026-05-01",
+    "fecha_finalizacion": null,
+    "sprint_id": 1
 }
 
-### Crear una accion
-POST http://127.0.0.1:8000/retrospectiva/1/items
-Content-Type: application/json
-
-{
-    "tipo": "accion",
-    "descripcion": "Realizar daily meetings todos los dias",
-    "estado": "pendiente"
-}
-
-### Modificar un item
-PUT http://127.0.0.1:8000/item/1
-Content-Type: application/json
-
-{
-    "tipo": "logro",
-    "descripcion": "Item actualizado",
-    "estado": "cumplido"
-}
-
-### Eliminar un item
-DELETE http://127.0.0.1:8000/item/1
-
-### ─── SEGUIMIENTO ─────────────────────────────────────────────────
-
-### Ver acciones anteriores de una retrospectiva
-GET http://127.0.0.1:8000/retrospectiva/2/acciones-anteriores
-
-### Registrar seguimiento de una accion
-POST http://127.0.0.1:8000/seguimiento
-Content-Type: application/json
-
-{
-    "accion_id": 1,
-    "retrospectiva_id": 2,
-    "cumplida": 1,
-    "observacion": "Se cumplió satisfactoriamente"
-}
-
-### Modificar un seguimiento
-PUT http://127.0.0.1:8000/seguimiento/1
-Content-Type: application/json
-
-{
-    "cumplida": 0,
-    "observacion": "No se pudo completar por falta de tiempo"
-}
+### Eliminar una historia
+DELETE http://127.0.0.1:8000/historia/1s

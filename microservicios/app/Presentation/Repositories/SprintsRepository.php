@@ -2,38 +2,48 @@
 
 namespace App\Repositories;
 
-use App\Controllers\ItemsController;
+use App\Controllers\SprintsController;
 use Exception;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class ItemsRepository
+class SprintsRepository
 {
-    function list(Request $request, Response $response, $args)
+    function getAll(Request $request, Response $response)
+    {
+        $controller = new SprintsController();
+        $sprints = $controller->getSprints();
+        $response->getBody()->write($sprints->toJson());
+        return $response
+            ->withStatus(200)
+            ->withHeader('Content-Type', 'application/json');
+    }
+
+    function detail(Request $request, Response $response, $args)
     {
         try {
-            $controller = new ItemsController();
-            $items = $controller->getItems($args['id']);
-            $response->getBody()->write($items->toJson());
+            $controller = new SprintsController();
+            $sprint = $controller->getSprint($args['id']);
+            $response->getBody()->write($sprint->toJson());
             return $response
                 ->withStatus(200)
                 ->withHeader('Content-Type', 'application/json');
         } catch (Exception $ex) {
-            $response->getBody()->write(json_encode(['msg' => 'Retrospectiva no encontrada']));
+            $response->getBody()->write(json_encode(['msg' => 'Sprint no encontrado']));
             return $response
                 ->withStatus(404)
                 ->withHeader('Content-Type', 'application/json');
         }
     }
 
-    function create(Request $request, Response $response, $args)
+    function create(Request $request, Response $response)
     {
         try {
             $body = $request->getBody()->getContents();
             $data = json_decode($body, true);
-            $controller = new ItemsController();
-            $item = $controller->guardarItem($args['id'], $data);
-            $response->getBody()->write($item->toJson());
+            $controller = new SprintsController();
+            $sprint = $controller->guardarSprint($data);
+            $response->getBody()->write($sprint->toJson());
             return $response
                 ->withStatus(201)
                 ->withHeader('Content-Type', 'application/json');
@@ -56,14 +66,14 @@ class ItemsRepository
         try {
             $body = $request->getBody()->getContents();
             $data = json_decode($body, true);
-            $controller = new ItemsController();
-            $item = $controller->modificarItem($args['id'], $data);
-            $response->getBody()->write($item->toJson());
+            $controller = new SprintsController();
+            $sprint = $controller->modificarSprint($args['id'], $data);
+            $response->getBody()->write($sprint->toJson());
             return $response
                 ->withStatus(200)
                 ->withHeader('Content-Type', 'application/json');
         } catch (Exception $ex) {
-            $response->getBody()->write(json_encode(['msg' => 'Item no encontrado']));
+            $response->getBody()->write(json_encode(['msg' => 'Sprint no encontrado']));
             return $response
                 ->withStatus(404)
                 ->withHeader('Content-Type', 'application/json');
@@ -73,14 +83,14 @@ class ItemsRepository
     function delete(Request $request, Response $response, $args)
     {
         try {
-            $controller = new ItemsController();
-            $controller->borrarItem($args['id']);
-            $response->getBody()->write(json_encode(['msg' => 'Item eliminado']));
+            $controller = new SprintsController();
+            $controller->borrarSprint($args['id']);
+            $response->getBody()->write(json_encode(['msg' => 'Sprint eliminado']));
             return $response
                 ->withStatus(200)
                 ->withHeader('Content-Type', 'application/json');
         } catch (Exception $ex) {
-            $response->getBody()->write(json_encode(['msg' => 'Item no encontrado']));
+            $response->getBody()->write(json_encode(['msg' => 'Sprint no encontrado']));
             return $response
                 ->withStatus(404)
                 ->withHeader('Content-Type', 'application/json');

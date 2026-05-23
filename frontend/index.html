@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SprintApp — Microservicios</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="app_front/css/base.css">
+    <link rel="stylesheet" href="app_front/css/modals.css">
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar__brand">
+            <span class="sidebar__logo">⚡</span>
+            <span class="sidebar__name">SprintApp</span>
+        </div>
+        <nav class="sidebar__nav">
+            <button class="nav__item active" data-page="dashboard" id="nav-dashboard">
+                <span class="nav__icon">◈</span>
+                <span>Dashboard</span>
+            </button>
+            <button class="nav__item" data-page="historias" id="nav-historias">
+                <span class="nav__icon">≡</span>
+                <span>Historias</span>
+            </button>
+            <button class="nav__item" data-page="sprints" id="nav-sprints">
+                <span class="nav__icon">⚑</span>
+                <span>Sprints</span>
+            </button>
+            <button class="nav__item" data-page="reportes" id="nav-reportes">
+                <span class="nav__icon">◎</span>
+                <span>Reportes</span>
+            </button>
+        </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main" id="main">
+
+        <!-- ═══ PAGE: DASHBOARD ═══ -->
+        <section class="page active" id="page-dashboard">
+            <header class="page__header">
+                <h1 class="page__title">Dashboard General</h1>
+            </header>
+            <div class="stats-grid">
+                <div class="stat-card stat-card--blue">
+                    <span class="stat-card__label">Total Historias</span>
+                    <span class="stat-card__value" id="dash-total">0</span>
+                </div>
+                <div class="stat-card stat-card--amber">
+                    <span class="stat-card__label">Historias Activas</span>
+                    <span class="stat-card__value" id="dash-activas">0</span>
+                </div>
+                <div class="stat-card stat-card--green">
+                    <span class="stat-card__label">Finalizadas</span>
+                    <span class="stat-card__value" id="dash-finalizadas">0</span>
+                </div>
+                <div class="stat-card stat-card--red">
+                    <span class="stat-card__label">Impedimentos</span>
+                    <span class="stat-card__value" id="dash-impedimentos">0</span>
+                </div>
+            </div>
+            <div class="kanban" id="kanban-board">
+                <div class="kanban__col">
+                    <div class="kanban__col-header kanban__col-header--nueva">Nuevas</div>
+                    <div class="kanban__cards" id="kanban-nueva"></div>
+                </div>
+                <div class="kanban__col">
+                    <div class="kanban__col-header kanban__col-header--activa">Activas</div>
+                    <div class="kanban__cards" id="kanban-activa"></div>
+                </div>
+                <div class="kanban__col">
+                    <div class="kanban__col-header kanban__col-header--finalizada">Finalizadas</div>
+                    <div class="kanban__cards" id="kanban-finalizada"></div>
+                </div>
+                <div class="kanban__col">
+                    <div class="kanban__col-header kanban__col-header--impedimento">Impedimentos</div>
+                    <div class="kanban__cards" id="kanban-impedimento"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ PAGE: HISTORIAS ═══ -->
+        <section class="page" id="page-historias">
+            <header class="page__header">
+                <h1 class="page__title">Historias de Usuario</h1>
+                <div class="page__actions">
+                    <select class="filter-select" id="filter-sprint-historias">
+                        <option value="">Todos los sprints</option>
+                    </select>
+                    <button class="btn btn--primary" id="btn-nueva-historia">+ Nueva Historia</button>
+                </div>
+            </header>
+            <table class="data-table" id="historias-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Título</th>
+                        <th>Responsable</th>
+                        <th>Sprint</th>
+                        <th>Estado</th>
+                        <th>Puntos</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="historias-tbody">
+                    <tr><td colspan="7" class="table__empty">Cargando...</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- ═══ PAGE: SPRINTS ═══ -->
+        <section class="page" id="page-sprints">
+            <header class="page__header">
+                <h1 class="page__title">Sprints</h1>
+                <button class="btn btn--primary" id="btn-nuevo-sprint">+ Nuevo Sprint</button>
+            </header>
+            <table class="data-table" id="sprints-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nombre</th>
+                        <th>Fecha Inicio</th>
+                        <th>Fecha Fin</th>
+                        <th>Historias</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="sprints-tbody">
+                    <tr><td colspan="6" class="table__empty">Cargando...</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- ═══ PAGE: REPORTES ═══ -->
+        <section class="page" id="page-reportes">
+            <header class="page__header">
+                <h1 class="page__title">Reportes</h1>
+                <div class="page__actions">
+                    <select class="filter-select" id="filter-sprint-reporte">
+                        <option value="">Todos los sprints</option>
+                    </select>
+                    <button class="btn btn--primary" id="btn-generar-reporte">Generar Reporte</button>
+                </div>
+            </header>
+            <div id="reporte-container" class="reporte-container"></div>
+        </section>
+
+    </main>
+
+    <!-- ═══════════════════════════════ MODALES ═══════════════════════════════ -->
+
+    <!-- Modal: Nuevo/Editar Sprint -->
+    <div id="modal-sprint" class="modal close">
+        <div class="modal__backdrop"></div>
+        <div class="modal__card">
+            <h2 class="modal__title" id="modal-sprint-title">Nuevo Sprint</h2>
+            <div class="form__group">
+                <label class="form__label">NOMBRE</label>
+                <input class="form__input" type="text" id="sprint-nombre" placeholder="Nombre del sprint">
+            </div>
+            <div class="form__group">
+                <label class="form__label">FECHA INICIO</label>
+                <input class="form__input" type="date" id="sprint-fecha-inicio">
+            </div>
+            <div class="form__group">
+                <label class="form__label">FECHA FIN</label>
+                <input class="form__input" type="date" id="sprint-fecha-fin">
+            </div>
+            <div class="modal__actions">
+                <button class="btn btn--ghost" id="btn-cancelar-sprint">Cancelar</button>
+                <button class="btn btn--primary" id="btn-guardar-sprint">Guardar Sprint</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Nueva/Editar Historia -->
+    <div id="modal-historia" class="modal close">
+        <div class="modal__backdrop"></div>
+        <div class="modal__card modal__card--wide">
+            <h2 class="modal__title" id="modal-historia-title">Nueva Historia</h2>
+            <div class="form__group">
+                <label class="form__label">TÍTULO</label>
+                <input class="form__input" type="text" id="historia-titulo" placeholder="Título de la historia">
+            </div>
+            <div class="form__group">
+                <label class="form__label">DESCRIPCIÓN</label>
+                <textarea class="form__input form__textarea" id="historia-descripcion" placeholder="Descripción"></textarea>
+            </div>
+            <div class="form__row">
+                <div class="form__group">
+                    <label class="form__label">RESPONSABLE</label>
+                    <input class="form__input" type="text" id="historia-responsable" placeholder="Nombre del responsable">
+                </div>
+                <div class="form__group">
+                    <label class="form__label">SPRINT</label>
+                    <select class="form__input form__select" id="historia-sprint">
+                        <option value="">-- Selecciona un Sprint --</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form__row">
+                <div class="form__group">
+                    <label class="form__label">ESTADO</label>
+                    <select class="form__input form__select" id="historia-estado">
+                        <option value="nueva">Nueva</option>
+                        <option value="activa">Activa</option>
+                        <option value="finalizada">Finalizada</option>
+                        <option value="impedimento">Impedimento</option>
+                    </select>
+                </div>
+                <div class="form__group">
+                    <label class="form__label">PUNTOS DE COMPLEJIDAD</label>
+                    <input class="form__input" type="number" id="historia-puntos" min="1" max="100" value="1">
+                </div>
+            </div>
+            <div class="form__row">
+                <div class="form__group">
+                    <label class="form__label">FECHA DE CREACIÓN</label>
+                    <input class="form__input" type="date" id="historia-fecha-creacion">
+                </div>
+                <div class="form__group">
+                    <label class="form__label">FECHA DE FINALIZACIÓN (OPCIONAL)</label>
+                    <input class="form__input" type="date" id="historia-fecha-finalizacion">
+                </div>
+            </div>
+            <div class="modal__actions">
+                <button class="btn btn--ghost" id="btn-cancelar-historia">Cancelar</button>
+                <button class="btn btn--primary" id="btn-guardar-historia">Guardar Historia</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Confirmación eliminar -->
+    <div id="modal-confirm" class="modal close">
+        <div class="modal__backdrop"></div>
+        <div class="modal__card modal__card--small">
+            <h2 class="modal__title">Confirmar eliminación</h2>
+            <p class="modal__text" id="confirm-text">¿Estás seguro de que deseas eliminar este elemento?</p>
+            <div class="modal__actions">
+                <button class="btn btn--ghost" id="btn-confirm-no">Cancelar</button>
+                <button class="btn btn--danger" id="btn-confirm-yes">Eliminar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast notification -->
+    <div id="toast" class="toast close">
+        <span id="toast-msg">Operación exitosa</span>
+    </div>
+
+    <!-- ═══ Scripts — orden de dependencias ═══ -->
+    <script src="app_front/js/modal.js"></script>
+    <script src="app_front/js/sprints.js"></script>
+    <script src="app_front/js/historias.js"></script>
+    <script src="app_front/js/dashboard.js"></script>
+    <script src="app_front/js/reportes.js"></script>
+    <script src="app_front/js/app.js"></script>
+
+</body>
+
+</html>

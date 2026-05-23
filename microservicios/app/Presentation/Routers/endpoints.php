@@ -1,47 +1,43 @@
 <?php
 
-use App\Repositories\RetrospectivosRepository;
-use App\Repositories\ItemsRepository;
-use App\Repositories\SeguimientoRepository;
+use App\Repositories\SprintsRepository;
+use App\Repositories\HistoriasRepository;
 use Slim\App;
-use Slim\Routing\RouteCollectorProxy;
 
 return function (App $app) {
 
-    // ─── RETROSPECTIVAS ───────────────────────────────────────────
-    $app->get('/retrospectivas', [RetrospectivosRepository::class, 'list']);
-    $app->post('/retrospectiva', [RetrospectivosRepository::class, 'create']);
-    $app->get('/retrospectiva/{id}', [RetrospectivosRepository::class, 'detail']);
-    $app->put('/retrospectiva/{id}', [RetrospectivosRepository::class, 'update']);
-    $app->delete('/retrospectiva/{id}', [RetrospectivosRepository::class, 'delete']);
+    $app->get("/sprints", function ($req, $res) {
+        return (new SprintsRepository())->getAll($req, $res);
+    });
+    $app->post("/sprint", function ($req, $res) {
+        return (new SprintsRepository())->create($req, $res);
+    });
+    $app->get("/sprint/{id}", function ($req, $res, $args) {
+        return (new SprintsRepository())->detail($req, $res, $args);
+    });
+    $app->put("/sprint/{id}", function ($req, $res, $args) {
+        return (new SprintsRepository())->update($req, $res, $args);
+    });
+    $app->delete("/sprint/{id}", function ($req, $res, $args) {
+        return (new SprintsRepository())->delete($req, $res, $args);
+    });
 
-    // ─── ITEMS (logros, impedimentos, acciones) ───────────────────
-    $app->get('/retrospectiva/{id}/items', [ItemsRepository::class, 'list']);
-    $app->post('/retrospectiva/{id}/items', [ItemsRepository::class, 'create']);
-    $app->put('/item/{id}', [ItemsRepository::class, 'update']);
-    $app->delete('/item/{id}', [ItemsRepository::class, 'delete']);
-
-    // ─── SEGUIMIENTO DE ACCIONES ──────────────────────────────────
-    $app->get('/retrospectiva/{id}/acciones-anteriores', [SeguimientoRepository::class, 'accionesAnteriores']);
-    $app->post('/seguimiento', [SeguimientoRepository::class, 'create']);
-    $app->put('/seguimiento/{id}', [SeguimientoRepository::class, 'update']);
-
-    // ─── AGRUPADO /api ────────────────────────────────────────────
-    $app->group('/api', function (RouteCollectorProxy $group) {
-
-        $group->get('/retrospectivas', [RetrospectivosRepository::class, 'list']);
-        $group->post('/retrospectiva', [RetrospectivosRepository::class, 'create']);
-        $group->get('/retrospectiva/{id}', [RetrospectivosRepository::class, 'detail']);
-        $group->put('/retrospectiva/{id}', [RetrospectivosRepository::class, 'update']);
-        $group->delete('/retrospectiva/{id}', [RetrospectivosRepository::class, 'delete']);
-
-        $group->get('/retrospectiva/{id}/items', [ItemsRepository::class, 'list']);
-        $group->post('/retrospectiva/{id}/items', [ItemsRepository::class, 'create']);
-        $group->put('/item/{id}', [ItemsRepository::class, 'update']);
-        $group->delete('/item/{id}', [ItemsRepository::class, 'delete']);
-
-        $group->get('/retrospectiva/{id}/acciones-anteriores', [SeguimientoRepository::class, 'accionesAnteriores']);
-        $group->post('/seguimiento', [SeguimientoRepository::class, 'create']);
-        $group->put('/seguimiento/{id}', [SeguimientoRepository::class, 'update']);
+    $app->get("/historias", function ($req, $res) {
+        return (new HistoriasRepository())->getAll($req, $res);
+    });
+    $app->get("/sprint/{id}/historias", function ($req, $res, $args) {
+        return (new HistoriasRepository())->listPorSprint($req, $res, $args);
+    });
+    $app->post("/historia", function ($req, $res) {
+        return (new HistoriasRepository())->create($req, $res);
+    });
+    $app->get("/historia/{id}", function ($req, $res, $args) {
+        return (new HistoriasRepository())->detail($req, $res, $args);
+    });
+    $app->put("/historia/{id}", function ($req, $res, $args) {
+        return (new HistoriasRepository())->update($req, $res, $args);
+    });
+    $app->delete("/historia/{id}", function ($req, $res, $args) {
+        return (new HistoriasRepository())->delete($req, $res, $args);
     });
 };

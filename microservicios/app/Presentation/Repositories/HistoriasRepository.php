@@ -2,34 +2,51 @@
 
 namespace App\Repositories;
 
-use App\Controllers\RetrospectivosController;
+use App\Controllers\HistoriasController;
 use Exception;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class RetrospectivosRepository
+class HistoriasRepository
 {
-    function list(Request $request, Response $response)
+    function getAll(Request $request, Response $response)
     {
-        $controller = new RetrospectivosController();
-        $retrospectivas = $controller->getRetrospectivas();
-        $response->getBody()->write($retrospectivas->toJson());
+        $controller = new HistoriasController();
+        $historias = $controller->getHistorias();
+        $response->getBody()->write($historias->toJson());
         return $response
             ->withStatus(200)
             ->withHeader('Content-Type', 'application/json');
     }
 
-    function detail(Request $request, Response $response, $args)
+    function listPorSprint(Request $request, Response $response, $args)
     {
         try {
-            $controller = new RetrospectivosController();
-            $retrospectiva = $controller->getRetrospectiva($args['id']);
-            $response->getBody()->write($retrospectiva->toJson());
+            $controller = new HistoriasController();
+            $historias = $controller->getHistoriasPorSprint($args['id']);
+            $response->getBody()->write($historias->toJson());
             return $response
                 ->withStatus(200)
                 ->withHeader('Content-Type', 'application/json');
         } catch (Exception $ex) {
-            $response->getBody()->write(json_encode(['msg' => 'Retrospectiva no encontrada']));
+            $response->getBody()->write(json_encode(['msg' => 'No hay historias para este sprint']));
+            return $response
+                ->withStatus(404)
+                ->withHeader('Content-Type', 'application/json');
+        }
+    }
+
+    function detail(Request $request, Response $response, $args)
+    {
+        try {
+            $controller = new HistoriasController();
+            $historia = $controller->getHistoria($args['id']);
+            $response->getBody()->write($historia->toJson());
+            return $response
+                ->withStatus(200)
+                ->withHeader('Content-Type', 'application/json');
+        } catch (Exception $ex) {
+            $response->getBody()->write(json_encode(['msg' => 'Historia no encontrada']));
             return $response
                 ->withStatus(404)
                 ->withHeader('Content-Type', 'application/json');
@@ -41,9 +58,9 @@ class RetrospectivosRepository
         try {
             $body = $request->getBody()->getContents();
             $data = json_decode($body, true);
-            $controller = new RetrospectivosController();
-            $retrospectiva = $controller->guardarRetrospectiva($data);
-            $response->getBody()->write($retrospectiva->toJson());
+            $controller = new HistoriasController();
+            $historia = $controller->guardarHistoria($data);
+            $response->getBody()->write($historia->toJson());
             return $response
                 ->withStatus(201)
                 ->withHeader('Content-Type', 'application/json');
@@ -66,14 +83,14 @@ class RetrospectivosRepository
         try {
             $body = $request->getBody()->getContents();
             $data = json_decode($body, true);
-            $controller = new RetrospectivosController();
-            $retrospectiva = $controller->modificarRetrospectiva($args['id'], $data);
-            $response->getBody()->write($retrospectiva->toJson());
+            $controller = new HistoriasController();
+            $historia = $controller->modificarHistoria($args['id'], $data);
+            $response->getBody()->write($historia->toJson());
             return $response
                 ->withStatus(200)
                 ->withHeader('Content-Type', 'application/json');
         } catch (Exception $ex) {
-            $response->getBody()->write(json_encode(['msg' => 'Retrospectiva no encontrada']));
+            $response->getBody()->write(json_encode(['msg' => 'Historia no encontrada']));
             return $response
                 ->withStatus(404)
                 ->withHeader('Content-Type', 'application/json');
@@ -83,14 +100,14 @@ class RetrospectivosRepository
     function delete(Request $request, Response $response, $args)
     {
         try {
-            $controller = new RetrospectivosController();
-            $controller->borrarRetrospectiva($args['id']);
-            $response->getBody()->write(json_encode(['msg' => 'Retrospectiva eliminada']));
+            $controller = new HistoriasController();
+            $controller->borrarHistoria($args['id']);
+            $response->getBody()->write(json_encode(['msg' => 'Historia eliminada']));
             return $response
                 ->withStatus(200)
                 ->withHeader('Content-Type', 'application/json');
         } catch (Exception $ex) {
-            $response->getBody()->write(json_encode(['msg' => 'Retrospectiva no encontrada']));
+            $response->getBody()->write(json_encode(['msg' => 'Historia no encontrada']));
             return $response
                 ->withStatus(404)
                 ->withHeader('Content-Type', 'application/json');
