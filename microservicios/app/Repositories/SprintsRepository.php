@@ -9,7 +9,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 class SprintsRepository
 {
-    function getAll(Request $request, Response $response)
+    public function getAll(Request $request, Response $response)
     {
         $controller = new SprintsController();
         $sprints = $controller->getSprints();
@@ -19,7 +19,7 @@ class SprintsRepository
             ->withHeader('Content-Type', 'application/json');
     }
 
-    function detail(Request $request, Response $response, $args)
+    public function detail(Request $request, Response $response, $args)
     {
         try {
             $controller = new SprintsController();
@@ -36,7 +36,7 @@ class SprintsRepository
         }
     }
 
-    function create(Request $request, Response $response)
+    public function create(Request $request, Response $response)
     {
         try {
             $body = $request->getBody()->getContents();
@@ -61,7 +61,7 @@ class SprintsRepository
         }
     }
 
-    function update(Request $request, Response $response, $args)
+    public function update(Request $request, Response $response, $args)
     {
         try {
             $body = $request->getBody()->getContents();
@@ -80,7 +80,7 @@ class SprintsRepository
         }
     }
 
-    function delete(Request $request, Response $response, $args)
+    public function delete(Request $request, Response $response, $args)
     {
         try {
             $controller = new SprintsController();

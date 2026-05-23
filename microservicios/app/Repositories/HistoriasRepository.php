@@ -9,7 +9,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 class HistoriasRepository
 {
-    function getAll(Request $request, Response $response)
+    public function getAll(Request $request, Response $response)
     {
         $controller = new HistoriasController();
         $historias = $controller->getHistorias();
@@ -19,7 +19,7 @@ class HistoriasRepository
             ->withHeader('Content-Type', 'application/json');
     }
 
-    function listPorSprint(Request $request, Response $response, $args)
+    public function listPorSprint(Request $request, Response $response, $args)
     {
         try {
             $controller = new HistoriasController();
@@ -36,7 +36,7 @@ class HistoriasRepository
         }
     }
 
-    function detail(Request $request, Response $response, $args)
+    public function detail(Request $request, Response $response, $args)
     {
         try {
             $controller = new HistoriasController();
@@ -53,7 +53,7 @@ class HistoriasRepository
         }
     }
 
-    function create(Request $request, Response $response)
+    public function create(Request $request, Response $response)
     {
         try {
             $body = $request->getBody()->getContents();
@@ -78,7 +78,7 @@ class HistoriasRepository
         }
     }
 
-    function update(Request $request, Response $response, $args)
+    public function update(Request $request, Response $response, $args)
     {
         try {
             $body = $request->getBody()->getContents();
@@ -97,7 +97,7 @@ class HistoriasRepository
         }
     }
 
-    function delete(Request $request, Response $response, $args)
+    public function delete(Request $request, Response $response, $args)
     {
         try {
             $controller = new HistoriasController();
