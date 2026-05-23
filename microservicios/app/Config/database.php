@@ -7,7 +7,7 @@ $capsule = new Capsule;
 $capsule->addConnection([
     'driver'    => 'mysql',
     'host'      => '127.0.0.1',
-    'database'  => 'registro_retro_db', 
+    'database'  => 'gestor_historias_db',
     'username'  => 'root',
     'password'  => '',
     'charset'   => 'utf8',
