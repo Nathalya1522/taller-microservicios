@@ -9,7 +9,7 @@ $cors      = require __DIR__ . '/../app/Presentation/Middlewares/CorsMiddleware.
 $endpoints = require __DIR__ . '/../app/Routers/endpoints.php';
 
 $app = AppFactory::create();
-$app->addBodyParsingMiddleware();   // ← necesario para leer JSON del body
+$app->addBodyParsingMiddleware();   // necesario para leer JSON del body
 $app->addRoutingMiddleware();
 $app->addErrorMiddleware(true, true, true);
 
