@@ -1,0 +1,103 @@
+### Listar todas las retrospectivas
+GET http://127.0.0.1:8000/retrospectivas
+
+### Consultar una retrospectiva por ID
+GET http://127.0.0.1:8000/retrospectiva/1
+
+### Crear una retrospectiva
+POST http://127.0.0.1:8000/retrospectiva
+Content-Type: application/json
+
+{
+    "sprint_numero": 1,
+    "sprint_nombre": "Sprint 1",
+    "fecha": "2026-05-22",
+    "descripcion": "Primera retrospectiva del equipo"
+}
+
+### Modificar una retrospectiva
+PUT http://127.0.0.1:8000/retrospectiva/1
+Content-Type: application/json
+
+{
+    "sprint_numero": 1,
+    "sprint_nombre": "Sprint 1 actualizado",
+    "fecha": "2026-05-22",
+    "descripcion": "Descripcion actualizada"
+}
+
+### Eliminar una retrospectiva
+DELETE http://127.0.0.1:8000/retrospectiva/1
+
+### ─── ITEMS ──────────────────────────────────────────────────────
+
+### Listar items de una retrospectiva
+GET http://127.0.0.1:8000/retrospectiva/1/items
+
+### Crear un logro
+POST http://127.0.0.1:8000/retrospectiva/1/items
+Content-Type: application/json
+
+{
+    "tipo": "logro",
+    "descripcion": "Completamos todos los tickets del sprint",
+    "estado": "pendiente"
+}
+
+### Crear un impedimento
+POST http://127.0.0.1:8000/retrospectiva/1/items
+Content-Type: application/json
+
+{
+    "tipo": "impedimento",
+    "descripcion": "Falta de comunicacion entre el equipo",
+    "estado": "pendiente"
+}
+
+### Crear una accion
+POST http://127.0.0.1:8000/retrospectiva/1/items
+Content-Type: application/json
+
+{
+    "tipo": "accion",
+    "descripcion": "Realizar daily meetings todos los dias",
+    "estado": "pendiente"
+}
+
+### Modificar un item
+PUT http://127.0.0.1:8000/item/1
+Content-Type: application/json
+
+{
+    "tipo": "logro",
+    "descripcion": "Item actualizado",
+    "estado": "cumplido"
+}
+
+### Eliminar un item
+DELETE http://127.0.0.1:8000/item/1
+
+### ─── SEGUIMIENTO ─────────────────────────────────────────────────
+
+### Ver acciones anteriores de una retrospectiva
+GET http://127.0.0.1:8000/retrospectiva/2/acciones-anteriores
+
+### Registrar seguimiento de una accion
+POST http://127.0.0.1:8000/seguimiento
+Content-Type: application/json
+
+{
+    "accion_id": 1,
+    "retrospectiva_id": 2,
+    "cumplida": 1,
+    "observacion": "Se cumplió satisfactoriamente"
+}
+
+### Modificar un seguimiento
+PUT http://127.0.0.1:8000/seguimiento/1
+Content-Type: application/json
+
+{
+    "cumplida": 0,
+    "observacion": "No se pudo completar por falta de tiempo"
+}
